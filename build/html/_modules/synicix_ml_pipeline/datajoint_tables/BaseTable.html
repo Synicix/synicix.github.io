@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>synicix_ml_pipeline.datajoint_tables.BaseTable &mdash; synita  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> synita
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datajoint.html">DataJoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docker.html">Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kubernetes.html">Kubernetes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../synicix_ml_pipeline_tutorial.html">Synicix ML Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../synicix_ml_pipeline_modules.html">Synicix ML Pipeline API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">synita</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>synicix_ml_pipeline.datajoint_tables.BaseTable</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for synicix_ml_pipeline.datajoint_tables.BaseTable</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datajoint</span> <span class="k">as</span> <span class="nn">datajoint</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">datajoint</span> <span class="k">as</span> <span class="nn">dj</span>
+<span class="kn">import</span> <span class="nn">importlib</span>
+
+<span class="n">schema</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">schema</span><span class="p">(</span><span class="s1">&#39;synicix_dev&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BaseTable"><a class="viewcode-back" href="../../../synicix_ml_pipeline.datajoint_tables.html#synicix_ml_pipeline.datajoint_tables.BaseTable.BaseTable">[docs]</a><span class="k">class</span> <span class="nc">BaseTable</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parent table for all datajoint classes which contains some useful function typcially used in tables and the schema pointer</span>
+
+<span class="sd">    All datajoint tables part of the main framework will inherite from this table.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BaseTable.import_class_from_module"><a class="viewcode-back" href="../../../synicix_ml_pipeline.datajoint_tables.html#synicix_ml_pipeline.datajoint_tables.BaseTable.BaseTable.import_class_from_module">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">import_class_from_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">class_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function to handle import of classes from modules</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            module_name (str): name of the module containing the target class to import</span>
+<span class="sd">            model_class_name (str): name of class to import from module</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            user_defined_class: class imported from module</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">class_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseTable.compute_md5_hash"><a class="viewcode-back" href="../../../synicix_ml_pipeline.datajoint_tables.html#synicix_ml_pipeline.datajoint_tables.BaseTable.BaseTable.compute_md5_hash">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">compute_md5_hash</span><span class="p">(</span><span class="n">tuple_dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Utility helper function to compute the md5 hash given the tuple_dict</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            tuple_dict (dict): dictionary to hash</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: 128 byte md5 hash string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">string_to_hash</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">tuple_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">string_to_hash</span> <span class="o">+=</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">string_to_hash</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="BaseTable.check_if_tuple_in_table"><a class="viewcode-back" href="../../../synicix_ml_pipeline.datajoint_tables.html#synicix_ml_pipeline.datajoint_tables.BaseTable.BaseTable.check_if_tuple_in_table">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">check_if_tuple_in_table</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tuple_dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if a given table has an entry that meets the tuple_dict condition. </span>
+<span class="sd">        If exists, return True else False</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            table: datajoint table reference</span>
+<span class="sd">            tuple_dict: dictionary containing the values of the table attributes</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: whether the table has the entry that meets tuple_dict or not</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check if the table is empty if so return False</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">cls</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> 
+            <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="c1"># Check if the tuple_dict has the right primary key and attributes</span>
+        <span class="k">assert</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">tuple_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">heading</span><span class="o">.</span><span class="n">names</span><span class="p">))),</span>\
+              <span class="s2">&quot;tuple dict has either wrong primary key or attributes (or both)!&quot;</span>
+        
+        <span class="n">restriction_tuple_dict</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1"># Restrict only non blob columns</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">heading</span><span class="o">.</span><span class="n">blobs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">restriction_tuple_dict</span><span class="p">:</span>
+                <span class="n">restriction_tuple_dict</span> <span class="o">=</span> <span class="n">tuple_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">heading</span><span class="o">.</span><span class="n">blobs</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">restriction_tuple_dict</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span>
+                
+        <span class="c1"># Find float values and compare them</span>
+        <span class="n">float_attributes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">tuple_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">:</span>
+                <span class="n">float_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+           
+        <span class="c1"># Remove float attributes from restriction    </span>
+        <span class="k">if</span> <span class="n">float_attributes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">restriction_tuple_dict</span><span class="p">:</span>
+                <span class="n">restriction_tuple_dict</span> <span class="o">=</span> <span class="n">tuple_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">float_attributes</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">restriction_tuple_dict</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span>
+                
+        <span class="c1"># Check if there is any blobs or floats if not not then set restriction_tuple_dict to tuple_dict</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">heading</span><span class="o">.</span><span class="n">blobs</span> <span class="ow">or</span> <span class="n">float_attributes</span><span class="p">):</span>
+            <span class="n">restriction_tuple_dict</span> <span class="o">=</span> <span class="n">tuple_dict</span>
+                
+        <span class="c1"># Query the table with the restriction</span>
+        <span class="n">restriction_rel</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">restriction_tuple_dict</span>
+        
+        <span class="c1"># If float attributes exists compare them</span>
+        <span class="k">if</span> <span class="n">float_attributes</span><span class="p">:</span>
+            <span class="n">qualifed_keys</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">tuple_entry</span> <span class="ow">in</span> <span class="n">restriction_rel</span><span class="o">.</span><span class="n">proj</span><span class="p">(</span><span class="o">*</span><span class="n">float_attributes</span><span class="p">):</span>
+                <span class="n">is_about_the_same_value</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">for</span> <span class="n">attribute_name</span> <span class="ow">in</span> <span class="n">float_attributes</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">tuple_dict</span><span class="p">[</span><span class="n">attribute_name</span><span class="p">],</span> <span class="n">tuple_entry</span><span class="p">[</span><span class="n">attribute_name</span><span class="p">]):</span>
+                        <span class="n">is_about_the_same_value</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="k">break</span>
+
+                <span class="k">if</span> <span class="n">is_about_the_same_value</span><span class="p">:</span>
+                    <span class="n">dict_to_insert</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">primary_attribute_name</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">primary_key</span><span class="p">:</span>
+                        <span class="n">dict_to_insert</span><span class="p">[</span><span class="n">primary_attribute_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">tuple_entry</span><span class="p">[</span><span class="n">primary_attribute_name</span><span class="p">]</span>
+                    <span class="n">qualifed_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dict_to_insert</span><span class="p">)</span>
+                    
+            <span class="c1"># Redo the restriction</span>
+            <span class="n">restriction_rel</span> <span class="o">=</span> <span class="n">restriction_rel</span> <span class="o">&amp;</span> <span class="n">qualifed_keys</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">restriction_rel</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">restriction_rel</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># there are more than 1 entries that meet the criteria</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The given restriction gives more than 1 possible entry in the table!&quot;</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="BaseTable.insert_tuples"><a class="viewcode-back" href="../../../synicix_ml_pipeline.datajoint_tables.html#synicix_ml_pipeline.datajoint_tables.BaseTable.BaseTable.insert_tuples">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">insert_tuples</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tuple_dicts</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Insert a tuple by checking the highest id number based on &quot;primary_key_id&quot;</span>
+<span class="sd">        When inserting, increment &quot;primary_key_id&quot; by 1</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            tuple_dict: either a dictionary or a list of dictionaries containing </span>
+<span class="sd">                        the values of the class attributes</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If tuple_dicts is a single dict then put it in a list</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tuple_dicts</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">tuple_dicts</span> <span class="o">=</span> <span class="p">[</span><span class="n">tuple_dicts</span><span class="p">]</span>
+        
+        <span class="c1"># Check if table has blobs columns</span>
+        <span class="n">blob_attributes</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">heading</span><span class="o">.</span><span class="n">blobs</span>
+        
+        <span class="k">if</span> <span class="n">blob_attributes</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">tuple_dict</span> <span class="ow">in</span> <span class="n">tuple_dicts</span><span class="p">:</span>
+                <span class="n">blob_only_tuple_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">blob_attributes</span><span class="p">:</span>
+                    <span class="n">blob_only_tuple_dict</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span> <span class="o">=</span> <span class="n">tuple_dict</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span>
+                
+                <span class="c1"># Hash the blobs</span>
+                <span class="n">tuple_dict</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">table_name</span> <span class="o">+</span> <span class="s1">&#39;_blobs_md5_hash&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">compute_md5_hash</span><span class="p">(</span><span class="n">blob_only_tuple_dict</span><span class="p">)</span>
+        
+        <span class="c1"># Variable to store tuple dicts that should be inserted</span>
+        <span class="n">tuple_dicts_to_insert</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c1"># Get the primary key column name where id is in the name</span>
+        <span class="n">primary_key_column_id_name</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">heading</span><span class="o">.</span><span class="n">primary_key</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">column_name</span> <span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">heading</span><span class="o">.</span><span class="n">primary_key</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
+        
+        <span class="c1"># Variable to store current highest id</span>
+        <span class="n">current_highest_id</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">primary_key_column_id_name</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> DESC&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">primary_key_column_id_name</span><span class="p">),</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">current_highest_id</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Table has no entry in it yet. Initialize to 0</span>
+            <span class="n">current_highest_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">current_highest_id</span> <span class="o">=</span> <span class="n">current_highest_id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">tuple_dict</span> <span class="ow">in</span> <span class="n">tuple_dicts</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">check_if_tuple_in_table</span><span class="p">(</span><span class="n">tuple_dict</span><span class="p">):</span>
+                <span class="c1"># Tuple is not in table, thus increment current_highest_id by 1 and add it to the current tuple_dict as the new id number</span>
+                <span class="n">current_highest_id</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">tuple_dict</span><span class="p">[</span><span class="n">primary_key_column_id_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_highest_id</span>
+                <span class="n">tuple_dicts_to_insert</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tuple_dict</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tuple_dict:&#39;</span><span class="p">,</span> <span class="n">tuple_dict</span><span class="p">,</span> <span class="s1">&#39;already exists! skipping the insertion&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># Insert all tuple_dicts in tuple_dicts_to_insert</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">tuple_dicts_to_insert</span><span class="p">)</span></div>
+        
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_remaining_keys_to_populate</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">key_source</span> <span class="o">-</span> <span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">jobs</span> <span class="o">&amp;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">table_name</span><span class="p">))</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;KEY&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Synicix
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

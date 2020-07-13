@@ -180,8 +180,40 @@
 <div class="section" id="synicix-ml-pipeline-models-meimodel-module">
 <h2>synicix_ml_pipeline.models.MEImodel module<a class="headerlink" href="#synicix-ml-pipeline-models-meimodel-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="synicix-ml-pipeline-models-simplemlp-module">
-<span id="simplemlp"></span><h2>synicix_ml_pipeline.models.SimpleMLP module<a class="headerlink" href="#synicix-ml-pipeline-models-simplemlp-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-synicix_ml_pipeline.models.SimpleMLP">
+<span id="synicix-ml-pipeline-models-simplemlp-module"></span><span id="simplemlp"></span><h2>synicix_ml_pipeline.models.SimpleMLP module<a class="headerlink" href="#module-synicix_ml_pipeline.models.SimpleMLP" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="synicix_ml_pipeline.models.SimpleMLP.SimpleMLP">
+<em class="property">class </em><code class="descclassname">synicix_ml_pipeline.models.SimpleMLP.</code><code class="descname">SimpleMLP</code><span class="sig-paren">(</span><em>input_shape</em>, <em>output_shape</em>, <em>num_hidden_layers=1</em>, <em>hidden_size=1000</em>, <em>nonlinear_function_module_name='torch.nn'</em>, <em>nonlinear_function_class_name='ELU'</em>, <em>nonlinear_function_class_params={}</em>, <em>final_relu=False</em>, <em>l1_loss_lamda=0.0</em>, <em>l2_loss_lamda=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synicix_ml_pipeline/models/SimpleMLP.html#SimpleMLP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synicix_ml_pipeline.models.SimpleMLP.SimpleMLP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>A very simple example of a multilayer perceptron network illustrating the typical model design for synicix_ml_pipeline</p>
+<dl class="method">
+<dt id="synicix_ml_pipeline.models.SimpleMLP.SimpleMLP.compute_regularizer">
+<code class="descname">compute_regularizer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/synicix_ml_pipeline/models/SimpleMLP.html#SimpleMLP.compute_regularizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synicix_ml_pipeline.models.SimpleMLP.SimpleMLP.compute_regularizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Regularlization Computation Function</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd>None</dd>
+<dt>Returns:</dt>
+<dd>Tensor: Regularlization loss to be added during the loss backpropergation</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="synicix_ml_pipeline.models.SimpleMLP.SimpleMLP.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synicix_ml_pipeline/models/SimpleMLP.html#SimpleMLP.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synicix_ml_pipeline.models.SimpleMLP.SimpleMLP.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forward function for SimpleMLP</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd>x (Tensor or list of Tensor): input batch, by default it only uses the first input tensor</dd>
+<dt>Returns:</dt>
+<dd>Tensor: Output of the model given the input
+Tensor: Regularlization loss to be added during the loss backpropergation</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-synicix_ml_pipeline.models">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-synicix_ml_pipeline.models" title="Permalink to this headline">¶</a></h2>

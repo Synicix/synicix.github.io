@@ -177,11 +177,52 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="synicix-ml-pipeline-dataset-classes-neurodatadataset-module">
-<span id="neurodatadataset"></span><h2>synicix_ml_pipeline.dataset_classes.NeuroDataDataset module<a class="headerlink" href="#synicix-ml-pipeline-dataset-classes-neurodatadataset-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-synicix_ml_pipeline.dataset_classes.NeuroDataDataset">
+<span id="synicix-ml-pipeline-dataset-classes-neurodatadataset-module"></span><span id="neurodatadataset"></span><h2>synicix_ml_pipeline.dataset_classes.NeuroDataDataset module<a class="headerlink" href="#module-synicix_ml_pipeline.dataset_classes.NeuroDataDataset" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="synicix_ml_pipeline.dataset_classes.NeuroDataDataset.NeuroDataDataset">
+<em class="property">class </em><code class="descclassname">synicix_ml_pipeline.dataset_classes.NeuroDataDataset.</code><code class="descname">NeuroDataDataset</code><span class="sig-paren">(</span><em>tuple_dict</em>, <em>dataset_cache_dir</em>, <em>tier</em>, <em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synicix_ml_pipeline/dataset_classes/NeuroDataDataset.html#NeuroDataDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synicix_ml_pipeline.dataset_classes.NeuroDataDataset.NeuroDataDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
+<dl class="method">
+<dt id="synicix_ml_pipeline.dataset_classes.NeuroDataDataset.NeuroDataDataset.get_additional_model_params">
+<code class="descname">get_additional_model_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/synicix_ml_pipeline/dataset_classes/NeuroDataDataset.html#NeuroDataDataset.get_additional_model_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synicix_ml_pipeline.dataset_classes.NeuroDataDataset.NeuroDataDataset.get_additional_model_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return additional_model_params</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd>None</dd>
+<dt>Returns:</dt>
+<dd>dict : additional_model_params to be passed on to the model at creation time</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="synicix-ml-pipeline-dataset-classes-stockdataset-module">
-<h2>synicix_ml_pipeline.dataset_classes.StockDataset module<a class="headerlink" href="#synicix-ml-pipeline-dataset-classes-stockdataset-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-synicix_ml_pipeline.dataset_classes.StockDataset">
+<span id="synicix-ml-pipeline-dataset-classes-stockdataset-module"></span><h2>synicix_ml_pipeline.dataset_classes.StockDataset module<a class="headerlink" href="#module-synicix_ml_pipeline.dataset_classes.StockDataset" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="synicix_ml_pipeline.dataset_classes.StockDataset.StockDataset">
+<em class="property">class </em><code class="descclassname">synicix_ml_pipeline.dataset_classes.StockDataset.</code><code class="descname">StockDataset</code><span class="sig-paren">(</span><em>tuple_dict, dataset_cache_dir, tier, train_percentage, validation_percentage, inputs_columns=['Price', 'Open', 'High', 'Low', 'Vol.'], target_columns=['Change %'], input_time_window_len=30, target_time_window_len=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synicix_ml_pipeline/dataset_classes/StockDataset.html#StockDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synicix_ml_pipeline.dataset_classes.StockDataset.StockDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
+<dl class="method">
+<dt id="synicix_ml_pipeline.dataset_classes.StockDataset.StockDataset.get_additional_model_params">
+<code class="descname">get_additional_model_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/synicix_ml_pipeline/dataset_classes/StockDataset.html#StockDataset.get_additional_model_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synicix_ml_pipeline.dataset_classes.StockDataset.StockDataset.get_additional_model_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return additional_model_params</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd>None</dd>
+<dt>Returns:</dt>
+<dd>dict : additional_model_params to be passed on to the model at creation time</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="synicix_ml_pipeline.dataset_classes.StockDataset.StockDataset.value_to_float">
+<code class="descname">value_to_float</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/synicix_ml_pipeline/dataset_classes/StockDataset.html#StockDataset.value_to_float"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#synicix_ml_pipeline.dataset_classes.StockDataset.StockDataset.value_to_float" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-synicix_ml_pipeline.dataset_classes">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-synicix_ml_pipeline.dataset_classes" title="Permalink to this headline">¶</a></h2>
